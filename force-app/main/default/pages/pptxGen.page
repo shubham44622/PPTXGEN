@@ -1,0 +1,97 @@
+<apex:page sidebar="false" showHeader="false" >
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        
+        <head>
+            <!-- added the pptgen Script -->
+            <apex:includeScript value="{!URLFOR($Resource.PPT_X, '/pptxgen.bundle.js')}"/> 
+        </head> 
+        <body>
+            <!-- Begin Default Content REMOVE THIS -->
+            <div style="text-align:center;margin-top:80px"><h1>PPT download is in progress...</h1> </div>
+            
+            <script>
+            window.onload=function(){
+                //intializing the pptx object
+                let pptx = new PptxGenJS();
+                
+                //Creation of the mainSlide
+                var hslide = pptx.addSlide('MASTER_SLIDE');
+                var subHeaderOpts2 = { x:1.0, y:.9, fontSize:14, color:'343232', align:'left' ,bold:true};
+                
+                
+                hslide.addText("SalesforceCodeCamp",  { x:0.5, y:4.3, fontSize:30,fontFace:'Arial', color:'#000000', align:'left',bold:false }); 
+                hslide.addText("Shubham Sharma",  { x:0.5, y:4.8, fontSize:16,fontFace:'Arial', color:'#000000', align:'left',bold:false }); 
+                hslide.addText("01/02/2022",  { x:0.5, y:5.1, fontFace:'Arial',fontSize:16, color:'#000000', align:'left',bold:false }); 
+                hslide.addText('Account Details',  { x:3.0, y:5.5, fontFace:'Arial',fontSize:10, color:'#000000', align:'right',bold:false }); 
+                
+                
+                // Creation of 2nd slide
+                var slide = pptx.addSlide('MASTER_SLIDE');
+                //slide1.back  = '#F2FBFF';
+                var headerOpts = { x:0.5, y:.3, fontSize:24, color:'000000', align:'left',bold:true };
+                var subHeaderOpts = { x:1.0, y:.9, fontSize:14, color:'343232', align:'left' ,bold:true};
+                slide.addText('Account Team', headerOpts);
+                var rows = [];
+                rows.push([
+                    { text: "Team Member", options: { color: "FFFFFF",fill:"005A64"  ,bold:true ,align:'center'} },
+                    { text: "Role", options: { color: "FFFFFF" ,fill:"005A64",bold:true } },
+                ]);
+                    rowColor='FFFFFF';
+                    rows.push([
+                    { text: "Shubham Sharma", options: { fill:rowColor } },
+                    { text: "Client Partner", options: { fill:rowColor } }
+                ]);
+                rows.push([
+                    { text: "Anuj Sharma", options: { fill:rowColor } },
+                    { text: "Client Partner", options: { fill:rowColor } }
+                ]);
+                var tabOpts = { autoPage: true,x:0.5, y:1.0, w:7.5, fill:'F7F7F7', fontSize:12 };
+                slide.addTable( rows, tabOpts );
+                
+                //Creation of the 3rd Slide
+                var slide1 = pptx.addSlide('MASTER_SLIDE');
+                //slide1.back  = '#F2FBFF';
+                var headerOpts1 = { x:0.5, y:.3, fontSize:24, color:'000000', align:'left',bold:true };
+                var subHeaderOpts1 = { x:1.0, y:.9, fontSize:14, color:'343232', align:'left' ,bold:true};
+                slide1.addText('Contacts', headerOpts1);
+                var rows1 = [];
+                rows1.push([
+                    { text: "Contact Name", options: { color: "FFFFFF",fill:"005A64"  ,bold:true ,align:'center'} },
+                    { text: "Contact Role", options: { color: "FFFFFF" ,fill:"005A64",bold:true } },
+                ]);
+                    rowColor='E9EBF5';
+                    rows1.push([
+                    { text: "Peter Parker", options: { fill:rowColor } },
+                    { text: "Client", options: { fill:rowColor } }
+                ]);
+                
+                rows1.push([
+                    { text: "Marry Jaine", options: { fill:rowColor } },
+                    { text: "Client", options: { fill:rowColor } }
+                ]);
+                slide1.addTable( rows1, tabOpts );
+                
+                //Creation of 4th slide with Chart
+                var slide1 = pptx.addSlide('MASTER_SLIDE');
+                let dataChartAreaLine = [
+                    {
+                        name: "Actual Sales",
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                        values: [1500, 4600, 5156, 3167, 8510, 8009, 6006, 7855, 12102, 12789, 10123, 15121],
+                    },
+                    {
+                        name: "Projected Sales",
+                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                        values: [1000, 2600, 3456, 4567, 5010, 6009, 7006, 8855, 9102, 10789, 11123, 12121],
+                    },
+                ];
+                    slide1.addChart(pptx.ChartType.line, dataChartAreaLine, { x: 1, y: 1, w: 8, h: 4 });
+                    pptx.writeFile();
+                    }
+                    </script>
+            
+        </body>
+    </html>
+    
+    
+</apex:page>
